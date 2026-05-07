@@ -7,9 +7,9 @@
 
     <!-- Строка с чекбоксом и названием задачи, горизонтальная -->
     <LinearLayout
-        android:layout_width="match_parent" <!-- На всю ширину родителя -->
+        android:layout_width="match_parent" <!-- На всю ширину родителя хотя можно сделать на половину для удобства пользователя -->
         android:layout_height="wrap_content" <!-- По высоте содержимого -->
-        android:orientation="horizontal" <!-- Элементы в одну строку -->
+        android:orientation="horizontal" <!-- Элементы в одну строку, желательно столбиком -->
         android:gravity="center_vertical"> <!-- Выравнивание по вертикали по центру -->
 
         <!-- Чекбокс для отметки выполнения задачи -->
@@ -17,13 +17,13 @@
             android:id="@+id/checkbox" <!-- ID для доступа из кода (TaskAdapter) -->
             android:layout_width="wrap_content" <!-- Ширина по размеру самого чекбокса -->
             android:layout_height="wrap_content" <!-- Высота по содержимому -->
-            android:buttonTint="#FD7500" <!-- Цвет галочки оранжевый -->
+            android:buttonTint="#FD7500" <!-- Цвет галочки оранжевый, при изменении темы будет плохо виден -->
             android:layout_marginEnd="12dp" /> <!-- Отступ справа от чекбокса до текста -->
 
         <!-- Текст названия задачи -->
         <TextView
             android:id="@+id/titleText" <!-- ID для доступа из кода -->
-            android:layout_width="0dp" <!-- Ширина растягивается (работает с weight) -->
+            android:layout_width="0dp" <!-- Ширина растягивается (работает с weight) что может создавать проблему при повороте экрана -->
             android:layout_height="wrap_content" <!-- Высота по тексту -->
             android:layout_weight="1" <!-- Забирает всё свободное место в строке -->
             android:text="Задача" <!-- Текст по умолчанию (заглушка) -->
@@ -157,17 +157,6 @@
 ------------------------------------------------------------------
 
 разметка HTML
-
- <?xml version="1.0" encoding="utf-8"?>
-<!-- Корневой контейнер, объединяет все элементы задачи в вертикальный блок -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" <!-- Растягивается на всю ширину родителя -->
-    android:layout_height="wrap_content" <!-- Высота по содержимому -->
-    android:orientation="vertical" <!-- Дочерние элементы идут сверху вниз -->
-    android:background="#0A024B" <!-- Тёмно-синий фон карточки -->
-    android:padding="16dp" <!-- Внутренние отступы со всех сторон -->
-    android:layout_marginHorizontal="8dp" <!-- Внешние отступы слева и справа -->
-    android:layout_marginVertical="4dp"> <!-- Внешние отступы сверху и снизу -->
 
     <!-- Контейнер для чекбокса и заголовка, горизонтальное расположение -->
     <LinearLayout
