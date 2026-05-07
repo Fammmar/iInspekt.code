@@ -5,19 +5,6 @@
 
 
 
-
-
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Корневой контейнер карточки задачи, вертикальное расположение -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" <!-- Растягивается на всю ширину экрана -->
-    android:layout_height="wrap_content" <!-- Высота подстраивается под содержимое -->
-    android:orientation="vertical" <!-- Все дочерние элементы идут сверху вниз -->
-    android:background="#0A024B" <!-- Тёмно-синий фон карточки -->
-    android:padding="16dp" <!-- Внутренние отступы от краёв карточки до содержимого -->
-    android:layout_marginHorizontal="8dp" <!-- Внешние отступы слева и справа от карточки -->
-    android:layout_marginVertical="4dp"> <!-- Внешние отступы сверху и снизу между карточками -->
-
     <!-- Строка с чекбоксом и названием задачи, горизонтальная -->
     <LinearLayout
         android:layout_width="match_parent" <!-- На всю ширину родителя -->
