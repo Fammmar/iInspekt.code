@@ -17,7 +17,7 @@
             android:layout_width="wrap_content" <!-- Ширина по размеру самого чекбокса -->
             android:layout_height="wrap_content" <!-- Высота по содержимому -->
             android:buttonTint="#FD7500" <!-- Цвет галочки оранжевый, при изменении темы будет плохо виден -->
-            android:layout_marginEnd="12dp" /> <!-- Отступ справа от чекбокса до текста -->
+            android:layout_marginEnd="12dp" /> <!-- Отступ справа от чекбокса до текста что не очень удобно для большинства-->
 
         <!-- Текст названия задачи -->
         <TextView
