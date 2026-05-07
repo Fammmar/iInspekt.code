@@ -1,183 +1,327 @@
+Комментирование кода 
+язык KOTLIN
+------------------------------------------------------------------
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Корневой контейнер карточки задачи, вертикальное расположение -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" <!-- Растягивается на всю ширину экрана -->
+    android:layout_height="wrap_content" <!-- Высота подстраивается под содержимое -->
+    android:orientation="vertical" <!-- Все дочерние элементы идут сверху вниз -->
+    android:background="#0A024B" <!-- Тёмно-синий фон карточки -->
+    android:padding="16dp" <!-- Внутренние отступы от краёв карточки до содержимого -->
+    android:layout_marginHorizontal="8dp" <!-- Внешние отступы слева и справа от карточки -->
+    android:layout_marginVertical="4dp"> <!-- Внешние отступы сверху и снизу между карточками -->
+
+    <!-- Строка с чекбоксом и названием задачи, горизонтальная -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину родителя -->
+        android:layout_height="wrap_content" <!-- По высоте содержимого -->
+        android:orientation="horizontal" <!-- Элементы в одну строку -->
+        android:gravity="center_vertical"> <!-- Выравнивание по вертикали по центру -->
+
+        <!-- Чекбокс для отметки выполнения задачи -->
+        <CheckBox
+            android:id="@+id/checkbox" <!-- ID для доступа из кода (TaskAdapter) -->
+            android:layout_width="wrap_content" <!-- Ширина по размеру самого чекбокса -->
+            android:layout_height="wrap_content" <!-- Высота по содержимому -->
+            android:buttonTint="#FD7500" <!-- Цвет галочки оранжевый -->
+            android:layout_marginEnd="12dp" /> <!-- Отступ справа от чекбокса до текста -->
+
+        <!-- Текст названия задачи -->
+        <TextView
+            android:id="@+id/titleText" <!-- ID для доступа из кода -->
+            android:layout_width="0dp" <!-- Ширина растягивается (работает с weight) -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:layout_weight="1" <!-- Забирает всё свободное место в строке -->
+            android:text="Задача" <!-- Текст по умолчанию (заглушка) -->
+            android:textSize="20sp" <!-- Размер шрифта -->
+            android:textColor="#FFFFFF" <!-- Белый цвет текста -->
+            android:textStyle="bold" /> <!-- Жирное начертание -->
+
+    </LinearLayout>
+
+    <!-- Строка с датой и категорией, горизонтальная -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="horizontal" <!-- Горизонтально -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:layout_marginTop="4dp" <!-- Отступ сверху от заголовка -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева, чтобы выровнять под чекбоксом -->
+
+        <!-- Текст даты и времени задачи -->
+        <TextView
+            android:id="@+id/dateTimeText" <!-- ID для доступа из адаптера -->
+            android:layout_width="0dp" <!-- Растягивается -->
+            android:layout_height="wrap_content" <!-- По тексту -->
+            android:layout_weight="1" <!-- Занимает остаток места -->
+            android:text="Завтра, 12:00" <!-- Текст-заглушка -->
+            android:textSize="16sp" <!-- Размер шрифта -->
+            android:textColor="#FAF6F6" /> <!-- Светлый цвет текста -->
+
+        <!-- Текст категории (личное, работа, учёба и т.д.) -->
+        <TextView
+            android:id="@+id/categoryText" <!-- ID для доступа из кода (можно расширить) -->
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:text="Личное" <!-- Текст-заглушка -->
+            android:textSize="14sp" <!-- Размер шрифта -->
+            android:textColor="#0A024B" <!-- Цвет текста совпадает с фоном → не видно! Нужно менять -->
+            android:background="#0A024B" <!-- Фон такой же как у карточки -->
+            android:paddingHorizontal="12dp" <!-- Горизонтальные отступы внутри -->
+            android:paddingVertical="4dp" <!-- Вертикальные отступы внутри -->
+            android:layout_marginStart="8dp" /> <!-- Отступ слева от даты -->
+
+    </LinearLayout>
+
+    <!-- Контейнер для подписи "Напомнить" и спиннера, горизонтальный -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="horizontal" <!-- В строку -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:layout_marginTop="8dp" <!-- Отступ сверху -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева 32dp -->
+
+        <!-- Текст-метка "Напомнить:" -->
+        <TextView
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:layout_marginEnd="8dp" <!-- Отступ справа от текста до спиннера -->
+            android:text="Напомнить:" <!-- Текст метки -->
+            android:textColor="#695A9E" <!-- Цвет текста серо-фиолетовый -->
+            android:textSize="12sp" /> <!-- Размер шрифта 12sp -->
+
+        <!-- Выпадающий список для выбора времени напоминания -->
+        <Spinner
+            android:id="@+id/reminderSpinner" <!-- ID, используется в адаптере, но отключён (enabled=false) -->
+            android:layout_width="195dp" <!-- Фиксированная ширина, не адаптивно -->
+            android:layout_height="wrap_content" <!-- Высота по содержимому -->
+            android:layout_weight="1" /> <!-- Вес для растягивания (но при фикс. ширине не работает) -->
+
+    </LinearLayout>
+
+    <!-- Выпадающий список для повторения задачи (без подписи) -->
+    <Spinner
+        android:id="@+id/repeatSpinner" <!-- ID, используется в адаптере, отключён -->
+        android:layout_width="209dp" <!-- Фиксированная ширина -->
+        android:layout_height="wrap_content" <!-- Высота по содержимому -->
+        android:layout_weight="1" /> <!-- Вес для растягивания -->
+
+    <!-- Контейнер для подписи "Повтор:" (отдельно от спиннера — неудобно) -->
+    <LinearLayout
+        android:layout_width="wrap_content" <!-- Ширина по содержимому -->
+        android:layout_height="wrap_content" <!-- Высота по содержимому -->
+        android:layout_marginStart="32dp" <!-- Отступ слева 32dp -->
+        android:layout_marginTop="4dp" <!-- Отступ сверху -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:orientation="horizontal"> <!-- Горизонтально (хотя внутри один элемент) -->
+
+        <!-- Текст-метка "Повтор:" -->
+        <TextView
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:layout_marginEnd="8dp" <!-- Отступ справа -->
+            android:text="Повтор:" <!-- Текст метки -->
+            android:textColor="#B0BEC5" <!-- Светлый серо-голубой цвет -->
+            android:textSize="12sp" /> <!-- Мелкий шрифт -->
+
+    </LinearLayout>
+
+    <!-- Контейнер для текста остатка времени и прогресс-бара, вертикальный -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="vertical" <!-- Вертикально: текст сверху, полоса снизу -->
+        android:layout_marginTop="12dp" <!-- Отступ сверху -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева 32dp -->
+
+        <!-- Текст с информацией об оставшемся времени -->
+        <TextView
+            android:id="@+id/timeRemainingText" <!-- ID для доступа из адаптера -->
+            android:layout_width="match_parent" <!-- На всю ширину контейнера -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:text="Осталось: 2 дня 5 часов" <!-- Текст-заглушка -->
+            android:textSize="13sp" <!-- Размер шрифта -->
+            android:textColor="#FD7500" <!-- Оранжевый цвет текста -->
+            android:layout_marginBottom="6dp" /> <!-- Отступ снизу до прогресс-бара -->
+
+        <!-- Полоса прогресса выполнения задачи -->
+        <ProgressBar
+            android:id="@+id/progressBar" <!-- ID для доступа из адаптера -->
+            style="?android:attr/progressBarStyleHorizontal" <!-- Горизонтальный стиль прогресс-бара -->
+            android:layout_width="match_parent" <!-- На всю ширину -->
+            android:layout_height="wrap_content" <!-- Стандартная высота -->
+            android:max="100" <!-- Максимальное значение 100% -->
+            android:progress="60" <!-- Текущий прогресс 60% (заглушка) -->
+            android:progressTint="#FCFD7700" /> <!-- Жёлтый цвет полосы прогресса -->
+    </LinearLayout>
+
+</LinearLayout>
 
 
 
+------------------------------------------------------------------
 
-using System;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-namespace Parking
-{
-    public partial class MainForm : Form
-    {
-        private DatabaseHelper dbHelper;
-        private DataGridView dgvParkingSpots;
-        private Button btnLoadSpots;
-        private Button btnOpenParkingForm;
+разметка HTML
 
-        public MainForm()
-        {
-            InitializeMyComponents();
-            dbHelper = new DatabaseHelper();
-            LoadParkingSpots();
-        }
+ <?xml version="1.0" encoding="utf-8"?>
+<!-- Корневой контейнер, объединяет все элементы задачи в вертикальный блок -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" <!-- Растягивается на всю ширину родителя -->
+    android:layout_height="wrap_content" <!-- Высота по содержимому -->
+    android:orientation="vertical" <!-- Дочерние элементы идут сверху вниз -->
+    android:background="#0A024B" <!-- Тёмно-синий фон карточки -->
+    android:padding="16dp" <!-- Внутренние отступы со всех сторон -->
+    android:layout_marginHorizontal="8dp" <!-- Внешние отступы слева и справа -->
+    android:layout_marginVertical="4dp"> <!-- Внешние отступы сверху и снизу -->
 
-        private void InitializeMyComponents()
-        {
-            this.Text = "Система управления парковкой";
-            this.Size = new Size(900, 600);
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.White;
+    <!-- Контейнер для чекбокса и заголовка, горизонтальное расположение -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину родителя -->
+        android:layout_height="wrap_content" <!-- Высота по содержимому -->
+        android:orientation="horizontal" <!-- Элементы в строку -->
+        android:gravity="center_vertical"> <!-- Выравнивание по центру по вертикали -->
 
-            // читаемость: нет группировки инициализации контролов
-            // читаемость: размеры и координаты заданы магическими числами
-            // улучшение архитектуры: вынести настройки стилей в отдельный метод или класс theme
-            var lblTitle = new Label();
-            lblTitle.Text = "Обзор парковочных мест";
-            lblTitle.Font = new Font("Arial", 16, FontStyle.Bold);
-            lblTitle.Location = new Point(20, 15);
-            lblTitle.Size = new Size(300, 30);
-            lblTitle.ForeColor = Color.DarkBlue;
+        <!-- Чекбокс — отмечает задачу как выполненную -->
+        <CheckBox
+            android:id="@+id/checkbox" <!-- Идентификатор для доступа из кода -->
+            android:layout_width="wrap_content" <!-- Ширина по размеру самого элемента -->
+            android:layout_height="wrap_content" <!-- Высота по содержимому -->
+            android:buttonTint="#FD7500" <!-- Цвет галочки оранжевый -->
+            android:layout_marginEnd="12dp" /> <!-- Отступ справа от чекбокса -->
 
-            btnLoadSpots = new Button();
-            btnLoadSpots.Text = "Обновить статус";
-            btnLoadSpots.Location = new Point(20, 60);
-            btnLoadSpots.Size = new Size(120, 35);
-            btnLoadSpots.BackColor = Color.LightBlue;
-            btnLoadSpots.Click += BtnLoadSpots_Click;
+        <!-- Текст заголовка задачи -->
+        <TextView
+            android:id="@+id/titleText" <!-- Идентификатор для доступа из кода -->
+            android:layout_width="0dp" <!-- Занимает всё свободное место с учётом weight -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:layout_weight="1" <!-- Вес для растягивания -->
+            android:text="Задача" <!-- Текст-заглушка -->
+            android:textSize="20sp" <!-- Размер шрифта 20sp -->
+            android:textColor="#FFFFFF" <!-- Белый цвет текста -->
+            android:textStyle="bold" /> <!-- Жирное начертание -->
 
-            btnOpenParkingForm = new Button();
-            btnOpenParkingForm.Text = "Управление парковкой";
-            btnOpenParkingForm.Location = new Point(150, 60);
-            btnOpenParkingForm.Size = new Size(150, 35);
-            btnOpenParkingForm.BackColor = Color.LightGreen;
-            btnOpenParkingForm.Click += BtnOpenParkingForm_Click;
+    </LinearLayout>
 
-            dgvParkingSpots = new DataGridView();
-            dgvParkingSpots.Location = new Point(20, 110);
-            dgvParkingSpots.Size = new Size(840, 400);
-            dgvParkingSpots.ReadOnly = true;
-            dgvParkingSpots.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvParkingSpots.BackgroundColor = Color.White;
-            dgvParkingSpots.RowHeadersVisible = false;
-            // возможная ошибка: не заданы имена колонок вручную, привязка идет по индексу в loadparkingspots
-            // эффективность: autosizecolumnsmode.fill может тормозить при большом количестве строк
+    <!-- Контейнер для даты и категории, горизонтальный -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="horizontal" <!-- В строку -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:layout_marginTop="4dp" <!-- Отступ сверху от предыдущего блока -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева 32dp (под чекбокс) -->
 
-            var statusLabel = new Label();
-            statusLabel.Text = "Для управления въездом/выездом нажмите 'Управление парковкой'";
-            statusLabel.Location = new Point(20, 520);
-            statusLabel.Size = new Size(500, 20);
-            statusLabel.ForeColor = Color.Gray;
+        <!-- Текст даты и времени задачи -->
+        <TextView
+            android:id="@+id/dateTimeText" <!-- Идентификатор -->
+            android:layout_width="0dp" <!-- Растягивается -->
+            android:layout_height="wrap_content" <!-- По тексту -->
+            android:layout_weight="1" <!-- Занимает остаток места -->
+            android:text="Завтра, 12:00" <!-- Текст-заглушка -->
+            android:textSize="16sp" <!-- Размер шрифта -->
+            android:textColor="#FAF6F6" /> <!-- Светло-серый цвет -->
 
-            this.Controls.AddRange(new Control[] {
-                lblTitle,
-                btnLoadSpots,
-                btnOpenParkingForm,
-                dgvParkingSpots,
-                statusLabel
-            });
-            
-            // улучшение архитектуры: нет обработки изменения размера окна
-            // возможная ошибка: если окно уменьшить, часть контролов станет невидимой
-        }
+        <!-- Текст категории (личное, работа и т.д.) -->
+        <TextView
+            android:id="@+id/categoryText" <!-- Идентификатор -->
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:text="Личное" <!-- Текст-заглушка -->
+            android:textSize="14sp" <!-- Размер шрифта -->
+            android:textColor="#0A024B" <!-- Цвет текста такой же как фон → не видно -->
+            android:background="#0A024B" <!-- Фон как у карточки -->
+            android:paddingHorizontal="12dp" <!-- Горизонтальные внутренние отступы -->
+            android:paddingVertical="4dp" <!-- Вертикальные внутренние отступы -->
+            android:layout_marginStart="8dp" /> <!-- Отступ слева от даты -->
 
-        private void BtnLoadSpots_Click(object sender, EventArgs e)
-        {
-            LoadParkingSpots();
-            // оптимизация: можно было бы вызвать LoadParkingSpots напрямую в обработчике, 
-            // но отдельный метод позволяет переиспользовать логику
-        }
+    </LinearLayout>
 
-        private void BtnOpenParkingForm_Click(object sender, EventArgs e)
-        {
-            ParkingForm parkingForm = new ParkingForm();
-            parkingForm.Show();
-            // возможная ошибка: форма не закрывается при закрытии главной, может висеть в памяти
-            // улучшение архитектуры: добавить parkingForm.Owner = this для привязки к главной форме
-            // возможная ошибка: если нажать кнопку несколько раз, откроется много копий формы
-        }
+    <!-- Контейнер для подписи "Напомнить" и выпадающего списка -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="horizontal" <!-- В строку -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:layout_marginTop="8dp" <!-- Отступ сверху -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева 32dp -->
 
-        private void LoadParkingSpots()
-        {
-            try
-            {
-                // читаемость: sql-запрос в коде, сложно поддерживать и читать
-                // улучшение архитектуры: вынести запрос в хранимую процедуру или отдельный файл ресурсов
-                // возможная ошибка: sql-инъекция невозможна, так как нет параметров, но запрос жестко зашит
-                // возможная ошибка: SUBSTRING(SpotNumber, 2, 10) упадет если номер места короче 2 символов
-                // возможная ошибка: CAST(SUBSTRING...) AS INT упадет если в номере есть буквы после первой
-                string query = @"
-            SELECT 
-                SpotNumber,
-                SpotType,
-                IsOccupied,
-                HourlyRate
-            FROM ParkingSpots 
-            ORDER BY 
-                CASE 
-                    WHEN LEFT(SpotNumber, 1) = 'A' THEN 1
-                    WHEN LEFT(SpotNumber, 1) = 'B' THEN 2
-                    WHEN LEFT(SpotNumber, 1) = 'C' THEN 3
-                    WHEN LEFT(SpotNumber, 1) = 'D' THEN 4
-                    ELSE 5
-                END,
-                CAST(SUBSTRING(SpotNumber, 2, 10) AS INT)";
+        <!-- Текст-метка "Напомнить:" -->
+        <TextView
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту -->
+            android:layout_marginEnd="8dp" <!-- Отступ справа от текста -->
+            android:text="Напомнить:" <!-- Текст метки -->
+            android:textColor="#695A9E" <!-- Серо-фиолетовый цвет -->
+            android:textSize="12sp" /> <!-- Мелкий шрифт -->
 
-                DataTable spots = dbHelper.ExecuteQuery(query);
+        <!-- Выпадающий список для выбора времени напоминания -->
+        <Spinner
+            android:id="@+id/reminderSpinner" <!-- Идентификатор -->
+            android:layout_width="195dp" <!-- Фиксированная ширина -->
+            android:layout_height="wrap_content" <!-- Высота по содержимому -->
+            android:layout_weight="1" /> <!-- Вес для растягивания -->
 
-                // читаемость: создание новой таблицы каждый раз при обновлении
-                // оптимизация: можно использовать существующую таблицу и менять только данные
-                DataTable displayTable = new DataTable();
-                displayTable.Columns.Add("Номер места");
-                displayTable.Columns.Add("Тип места");
-                displayTable.Columns.Add("Статус");
-                displayTable.Columns.Add("Тариф в час");
+    </LinearLayout>
 
-                foreach (DataRow row in spots.Rows)
-                {
-                    // возможная ошибка: Convert.ToBoolean может выбросить исключение если значение не bool
-                    bool isOccupied = Convert.ToBoolean(row["IsOccupied"]);
-                    string status = isOccupied ? "Занято" : "Свободно";
+    <!-- Выпадающий список для выбора периодичности повторения задачи -->
+    <Spinner
+        android:id="@+id/repeatSpinner" <!-- Идентификатор -->
+        android:layout_width="209dp" <!-- Фиксированная ширина -->
+        android:layout_height="wrap_content" <!-- Высота по содержимому (было 1dp — исправлено) -->
+        android:layout_weight="1" /> <!-- Вес для растягивания -->
 
-                    // возможная ошибка: если SpotType не Standard и не VIP, то russianSpotType будет пустым
-                    string spotType = row["SpotType"].ToString();
-                    string russianSpotType = spotType == "Standard" ? "Стандарт" : "VIP";
-                    
-                    // возможная ошибка: HourlyRate может быть null, ToString() не упадет, но даст пустую строку
-                    displayTable.Rows.Add(
-                        row["SpotNumber"].ToString(),
-                        russianSpotType,
-                        status,
-                        row["HourlyRate"]
-                    );
-                }
+    <!-- Контейнер для подписи "Повтор:" (отдельно от спиннера) -->
+    <LinearLayout
+        android:layout_width="wrap_content" <!-- Ширина по содержимому -->
+        android:layout_height="wrap_content" <!-- Высота по содержимому -->
+        android:layout_marginStart="32dp" <!-- Отступ слева 32dp -->
+        android:layout_marginTop="4dp" <!-- Отступ сверху -->
+        android:gravity="center_vertical" <!-- По центру вертикали -->
+        android:orientation="horizontal"> <!-- Горизонтальное расположение (хотя внутри один элемент) -->
 
-                dgvParkingSpots.DataSource = displayTable;
+        <!-- Текст-метка "Повтор:" -->
+        <TextView
+            android:layout_width="wrap_content" <!-- Ширина по тексту -->
+            android:layout_height="wrap_content" <!-- Высота по тексту (было 0dp — исправлено) -->
+            android:layout_marginEnd="8dp" <!-- Отступ справа -->
+            android:text="Повтор:" <!-- Текст метки -->
+            android:textColor="#B0BEC5" <!-- Светлый серо-голубой -->
+            android:textSize="12sp" /> <!-- Мелкий шрифт -->
 
-                // эффективность: проход по всем строкам после привязки данных
-                // оптимизация: можно задать стили через событие CellFormatting вместо цикла
-                foreach (DataGridViewRow gridRow in dgvParkingSpots.Rows)
-                {
-                    // возможная ошибка: если колонка Статус была переименована или удалена, обращение по имени упадет
-                    if (gridRow.Cells["Статус"].Value?.ToString() == "Занято")
-                    {
-                        gridRow.DefaultCellStyle.BackColor = Color.LightCoral;
-                        gridRow.DefaultCellStyle.ForeColor = Color.DarkRed;
-                    }
-                    else
-                    {
-                        gridRow.DefaultCellStyle.BackColor = Color.LightGreen;
-                        gridRow.DefaultCellStyle.ForeColor = Color.DarkGreen;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // читаемость: сообщение об ошибке не локализовано
-                // улучшение архитектуры: добавить логирование ошибки
-                // возможная ошибка: если ошибка в цикле окрашивания, таблица останется без данных
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}");
-            }
-        }
-    }
-}
+    </LinearLayout>
+
+    <!-- Контейнер для текста остатка времени и прогресс-бара -->
+    <LinearLayout
+        android:layout_width="match_parent" <!-- На всю ширину -->
+        android:layout_height="wrap_content" <!-- По содержимому -->
+        android:orientation="vertical" <!-- Вертикально (текст сверху, полоса снизу) -->
+        android:layout_marginTop="12dp" <!-- Отступ сверху -->
+        android:layout_marginStart="32dp"> <!-- Отступ слева 32dp -->
+
+        <!-- Текст с информацией, сколько осталось времени до дедлайна -->
+        <TextView
+            android:id="@+id/timeRemainingText" <!-- Идентификатор -->
+            android:layout_width="match_parent" <!-- На всю ширину -->
+            android:layout_height="wrap_content" <!-- По тексту -->
+            android:text="Осталось: 2 дня 5 часов" <!-- Текст-заглушка -->
+            android:textSize="13sp" <!-- Размер шрифта -->
+            android:textColor="#FD7500" <!-- Оранжевый цвет -->
+            android:layout_marginBottom="6dp" /> <!-- Отступ снизу перед прогресс-баром -->
+
+        <!-- Полоса прогресса выполнения задачи -->
+        <ProgressBar
+            android:id="@+id/progressBar" <!-- Идентификатор -->
+            style="?android:attr/progressBarStyleHorizontal" <!-- Горизонтальный стиль -->
+            android:layout_width="match_parent" <!-- На всю ширину -->
+            android:layout_height="wrap_content" <!-- Высота стандартная -->
+            android:max="100" <!-- Максимальное значение 100% -->
+            android:progress="60" <!-- Текущий прогресс 60% (заглушка) -->
+            android:progressTint="#FCFD7700" /> <!-- Жёлтый цвет полосы -->
+
+    </LinearLayout>
+
+</LinearLayout>
